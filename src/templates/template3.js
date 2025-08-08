@@ -252,7 +252,7 @@ export default function Template3({ data }) {
                {data.publications.map((pub, i) => (
                <div key={i} className="entry">
                 <div className="entry-header">
-                  <p className="entry-title">"{pub.title}"</p>
+                  <p className="entry-title">&quot;{pub.title}&quot;</p>
                   <p className="entry-date">{pub.year}</p>
                 </div>
                 <p className="entry-subtitle">{pub.journal}</p>
