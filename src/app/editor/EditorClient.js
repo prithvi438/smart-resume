@@ -1,6 +1,4 @@
-// FILE: src/app/editor/EditorClient.js
-
-"use client"; // This is CRITICAL. This file is a Client Component.
+"use client"; 
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -20,11 +18,32 @@ const initialResumeData = {
   phone: "(555) 123-4567",
   website: "yourportfolio.com",
   linkedin: "linkedin.com/in/yourprofile",
-  summary: "A brief professional summary about yourself, your skills, and your career goals. Keep it concise and impactful.",
-  experience: [ { title: "Job Title", company: "Company Name", period: "Jan 2022 - Present", duties: ["Responsibility or accomplishment #1"], }, ],
-  education: [ { degree: "Degree or Certificate", institution: "University or Institution Name", period: "2018 - 2022", notes: "Relevant coursework or honors." }, ],
+  summary:
+    "A brief professional summary about yourself, your skills, and your career goals. Keep it concise and impactful.",
+  experience: [
+    {
+      title: "Job Title",
+      company: "Company Name",
+      period: "Jan 2022 - Present",
+      duties: ["Responsibility or accomplishment #1"],
+    },
+  ],
+  education: [
+    {
+      degree: "Degree or Certificate",
+      institution: "University or Institution Name",
+      period: "2018 - 2022",
+      notes: "Relevant coursework or honors.",
+    },
+  ],
   skills: ["Skill #1", "Skill #2", "Skill #3"],
-  projects: [{ name: "Project Name", description: "A short description of the project, its purpose, and the technologies used." }]
+  projects: [
+    {
+      name: "Project Name",
+      description:
+        "A short description of the project, its purpose, and the technologies used.",
+    },
+  ],
 };
 
 export default function EditorClient() {
@@ -50,49 +69,60 @@ export default function EditorClient() {
   const handleDutyChange = (expIndex, dutyIndex, value) => {
     const updatedExperience = [...resumeData.experience];
     updatedExperience[expIndex].duties[dutyIndex] = value;
-    setResumeData(prev => ({ ...prev, experience: updatedExperience }));
+    setResumeData((prev) => ({ ...prev, experience: updatedExperience }));
   };
 
   const addDuty = (expIndex) => {
     const updatedExperience = [...resumeData.experience];
     updatedExperience[expIndex].duties.push("New responsibility");
-    setResumeData(prev => ({ ...prev, experience: updatedExperience }));
+    setResumeData((prev) => ({ ...prev, experience: updatedExperience }));
   };
 
   const removeDuty = (expIndex, dutyIndex) => {
     const updatedExperience = [...resumeData.experience];
     updatedExperience[expIndex].duties.splice(dutyIndex, 1);
-    setResumeData(prev => ({ ...prev, experience: updatedExperience }));
-  }
+    setResumeData((prev) => ({ ...prev, experience: updatedExperience }));
+  };
 
   const handleSkillChange = (index, value) => {
     const updatedSkills = [...resumeData.skills];
     updatedSkills[index] = value;
-    setResumeData(prev => ({...prev, skills: updatedSkills}));
-  }
+    setResumeData((prev) => ({ ...prev, skills: updatedSkills }));
+  };
 
   const addArrayItem = (section, newItem) => {
-     setResumeData((prev) => ({ ...prev, [section]: [...(prev[section] || []), newItem] }));
+    setResumeData((prev) => ({
+      ...prev,
+      [section]: [...(prev[section] || []), newItem],
+    }));
   };
 
   const removeArrayItem = (section, index) => {
     const updatedArray = [...resumeData[section]];
     updatedArray.splice(index, 1);
-    setResumeData((prev) => ({...prev, [section]: updatedArray}));
+    setResumeData((prev) => ({ ...prev, [section]: updatedArray }));
   };
 
   const renderTemplate = () => {
     switch (templateId) {
-      case "template1": return <Template1 data={resumeData} />;
-      case "template2": return <Template2 data={resumeData} />;
-      case "template3": return <Template3 data={resumeData} />;
-      default: return <div style={{textAlign: 'center', padding: '2rem'}}>Loading Template...</div>;
+      case "template1":
+        return <Template1 data={resumeData} />;
+      case "template2":
+        return <Template2 data={resumeData} />;
+      case "template3":
+        return <Template3 data={resumeData} />;
+      default:
+        return (
+          <div style={{ textAlign: "center", padding: "2rem" }}>Loading Template...</div>
+        );
     }
   };
 
   return (
     <>
-      <Head><title>Resume Editor – SmartResume</title></Head>
+      <Head>
+        <title>Resume Editor – SmartResume</title>
+      </Head>
       <style>{`
         .form-section { background-color: #ffffff; border-radius: 8px; margin-bottom: 1.5rem; padding: 1.5rem; border: 1px solid #e2e8f0; }
         .form-section h3 { font-size: 1.25rem; font-weight: 600; margin: 0 0 1.25rem 0; color: #111827; padding-bottom: 0.75rem; border-bottom: 1px solid #f3f4f6; }
@@ -105,97 +135,345 @@ export default function EditorClient() {
         .remove-btn { position: absolute; top: 0.75rem; right: 0.75rem; background: #fee2e2; color: #b91c1c; border: none; border-radius: 50%; cursor: pointer; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; }
         @media print { .editor-sidebar { display: none !important; } .preview-pane { width: 100% !important; padding: 0 !important; } .preview-wrapper { transform: scale(1) !important; } }
       `}</style>
-      
+
       <div style={{ display: "flex", height: "100vh", backgroundColor: "#F8FAFC" }}>
         {/* LEFT SIDE: FORM */}
-        <aside className="editor-sidebar" style={{ width: "450px", height: "100vh", overflowY: "auto", padding: "1.5rem", borderRight: "1px solid #E2E8F0", backgroundColor: '#ffffff' }}>
-            <button onClick={() => router.back()} className="add-btn" style={{ marginBottom: '1.5rem', background: '#f3f4f6', color: '#4b5563' }}><ArrowLeft size={16} /> Back to Templates</button>
-            <h2 style={{fontSize: '1.75rem', fontWeight: 700, marginBottom: '1.5rem', color: '#111827'}}>Edit Your Resume</h2>
+        <aside
+          className="editor-sidebar"
+          style={{
+            width: "450px",
+            height: "100vh",
+            overflowY: "auto",
+            padding: "1.5rem",
+            borderRight: "1px solid #E2E8F0",
+            backgroundColor: "#ffffff",
+          }}
+        >
+          <button
+            onClick={() => router.back()}
+            className="add-btn"
+            style={{ marginBottom: "1.5rem", background: "#f3f4f6", color: "#4b5563" }}
+          >
+            <ArrowLeft size={16} /> Back to Templates
+          </button>
+          <h2
+            style={{
+              fontSize: "1.75rem",
+              fontWeight: 700,
+              marginBottom: "1.5rem",
+              color: "#111827",
+            }}
+          >
+            Edit Your Resume
+          </h2>
 
-            {/* Personal Details Section */}
-            <div className="form-section">
-                <h3>Personal Details</h3>
-                <div className="form-group"><label htmlFor="fullName">Full Name</label><input id="fullName" name="fullName" value={resumeData.fullName} onChange={handleInputChange} /></div>
-                <div className="form-group"><label htmlFor="jobTitle">Job Title</label><input id="jobTitle" name="jobTitle" value={resumeData.jobTitle} onChange={handleInputChange} /></div>
-                <div className="form-group"><label htmlFor="email">Email</label><input id="email" name="email" type="email" value={resumeData.email} onChange={handleInputChange} /></div>
-                <div className="form-group"><label htmlFor="phone">Phone</label><input id="phone" name="phone" value={resumeData.phone} onChange={handleInputChange} /></div>
-                <div className="form-group"><label htmlFor="website">Website / Portfolio</label><input id="website" name="website" value={resumeData.website} onChange={handleInputChange} /></div>
-                <div className="form-group"><label htmlFor="linkedin">LinkedIn Profile</label><input id="linkedin" name="linkedin" value={resumeData.linkedin} onChange={handleInputChange} /></div>
+          {/* Personal Details Section */}
+          <div className="form-section">
+            <h3>Personal Details</h3>
+            <div className="form-group">
+              <label htmlFor="fullName">Full Name</label>
+              <input
+                id="fullName"
+                name="fullName"
+                value={resumeData.fullName}
+                onChange={handleInputChange}
+              />
             </div>
-            
-            {/* Summary Section */}
-            <div className="form-section">
-                <h3>Professional Summary</h3>
-                <div className="form-group"><textarea name="summary" value={resumeData.summary} onChange={handleInputChange} rows={5}></textarea></div>
+            <div className="form-group">
+              <label htmlFor="jobTitle">Job Title</label>
+              <input
+                id="jobTitle"
+                name="jobTitle"
+                value={resumeData.jobTitle}
+                onChange={handleInputChange}
+              />
             </div>
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                value={resumeData.email}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="phone">Phone</label>
+              <input
+                id="phone"
+                name="phone"
+                value={resumeData.phone}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="website">Website / Portfolio</label>
+              <input
+                id="website"
+                name="website"
+                value={resumeData.website}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="linkedin">LinkedIn Profile</label>
+              <input
+                id="linkedin"
+                name="linkedin"
+                value={resumeData.linkedin}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
 
-            {/* Work Experience Section */}
-            <div className="form-section">
-                <h3>Work Experience</h3>
-                {resumeData.experience.map((exp, index) => (
-                    <div key={index} className="array-item">
-                         <button onClick={() => removeArrayItem('experience', index)} className="remove-btn"><Trash2 size={16}/></button>
-                         <div className="form-group"><label>Job Title</label><input name="title" value={exp.title} onChange={(e) => handleArrayChange('experience', index, e)} /></div>
-                         <div className="form-group"><label>Company</label><input name="company" value={exp.company} onChange={(e) => handleArrayChange('experience', index, e)} /></div>
-                         <div className="form-group"><label>Period</label><input name="period" value={exp.period} onChange={(e) => handleArrayChange('experience', index, e)} /></div>
-                         <label className="form-group">Responsibilities / Achievements</label>
-                         {exp.duties.map((duty, dutyIndex) => (
-                           <div key={dutyIndex} style={{display: 'flex', gap: '0.5rem', marginBottom: '0.5rem'}}>
-                              <input value={duty} onChange={(e) => handleDutyChange(index, dutyIndex, e.target.value)} style={{flex: 1}} />
-                              <button onClick={() => removeDuty(index, dutyIndex)} className="remove-btn" style={{position: 'static', width: '38px', height: '38px'}}><Trash2 size={14}/></button>
-                           </div>
-                         ))}
-                         <button onClick={() => addDuty(index)} className="add-btn" style={{fontSize: '0.875rem', padding: '0.25rem 0.75rem', marginTop: '0.5rem'}}>Add Responsibility</button>
-                    </div>
+          {/* Summary Section */}
+          <div className="form-section">
+            <h3>Professional Summary</h3>
+            <div className="form-group">
+              <textarea
+                name="summary"
+                value={resumeData.summary}
+                onChange={handleInputChange}
+                rows={5}
+              ></textarea>
+            </div>
+          </div>
+
+          {/* Work Experience Section */}
+          <div className="form-section">
+            <h3>Work Experience</h3>
+            {resumeData.experience.map((exp, index) => (
+              <div key={index} className="array-item">
+                <button
+                  onClick={() => removeArrayItem("experience", index)}
+                  className="remove-btn"
+                >
+                  <Trash2 size={16} />
+                </button>
+                <div className="form-group">
+                  <label>Job Title</label>
+                  <input
+                    name="title"
+                    value={exp.title}
+                    onChange={(e) => handleArrayChange("experience", index, e)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Company</label>
+                  <input
+                    name="company"
+                    value={exp.company}
+                    onChange={(e) => handleArrayChange("experience", index, e)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Period</label>
+                  <input
+                    name="period"
+                    value={exp.period}
+                    onChange={(e) => handleArrayChange("experience", index, e)}
+                  />
+                </div>
+                <label className="form-group">Responsibilities / Achievements</label>
+                {exp.duties.map((duty, dutyIndex) => (
+                  <div
+                    key={dutyIndex}
+                    style={{ display: "flex", gap: "0.5rem", marginBottom: "0.5rem" }}
+                  >
+                    <input
+                      value={duty}
+                      onChange={(e) => handleDutyChange(index, dutyIndex, e.target.value)}
+                      style={{ flex: 1 }}
+                    />
+                    <button
+                      onClick={() => removeDuty(index, dutyIndex)}
+                      className="remove-btn"
+                      style={{ position: "static", width: "38px", height: "38px" }}
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
                 ))}
-                <button onClick={() => addArrayItem('experience', {title: 'New Job', company: 'Company', period: '', duties: ['']})} className="add-btn"><Plus size={16} /> Add Experience</button>
-            </div>
-            
-            {/* Projects Section - NEW */}
-            <div className="form-section">
-                <h3>Projects</h3>
-                {resumeData.projects.map((project, index) => (
-                    <div key={index} className="array-item">
-                         <button onClick={() => removeArrayItem('projects', index)} className="remove-btn"><Trash2 size={16}/></button>
-                         <div className="form-group"><label>Project Name</label><input name="name" value={project.name} onChange={(e) => handleArrayChange('projects', index, e)} /></div>
-                         <div className="form-group"><label>Description</label><textarea name="description" value={project.description} onChange={(e) => handleArrayChange('projects', index, e)} rows={3}></textarea></div>
-                    </div>
-                ))}
-                <button onClick={() => addArrayItem('projects', {name: 'New Project', description: ''})} className="add-btn"><Plus size={16} /> Add Project</button>
-            </div>
+                <button
+                  onClick={() => addDuty(index)}
+                  className="add-btn"
+                  style={{
+                    fontSize: "0.875rem",
+                    padding: "0.25rem 0.75rem",
+                    marginTop: "0.5rem",
+                  }}
+                >
+                  Add Responsibility
+                </button>
+              </div>
+            ))}
+            <button
+              onClick={() =>
+                addArrayItem("experience", {
+                  title: "New Job",
+                  company: "Company",
+                  period: "",
+                  duties: [""],
+                })
+              }
+              className="add-btn"
+            >
+              <Plus size={16} /> Add Experience
+            </button>
+          </div>
 
-             {/* Education Section */}
-            <div className="form-section">
-                <h3>Education</h3>
-                {resumeData.education.map((edu, index) => (
-                    <div key={index} className="array-item">
-                         <button onClick={() => removeArrayItem('education', index)} className="remove-btn"><Trash2 size={16}/></button>
-                         <div className="form-group"><label>Degree / Certificate</label><input name="degree" value={edu.degree} onChange={(e) => handleArrayChange('education', index, e)} /></div>
-                         <div className="form-group"><label>Institution</label><input name="institution" value={edu.institution} onChange={(e) => handleArrayChange('education', index, e)} /></div>
-                         <div className="form-group"><label>Period</label><input name="period" value={edu.period} onChange={(e) => handleArrayChange('education', index, e)} /></div>
-                         <div className="form-group"><label>Notes (Optional)</label><input name="notes" value={edu.notes} onChange={(e) => handleArrayChange('education', index, e)} /></div>
-                    </div>
-                ))}
-                <button onClick={() => addArrayItem('education', {degree: 'Degree', institution: 'University', period: '', notes: ''})} className="add-btn"><Plus size={16} /> Add Education</button>
-            </div>
+          {/* Projects Section - NEW */}
+          <div className="form-section">
+            <h3>Projects</h3>
+            {resumeData.projects.map((project, index) => (
+              <div key={index} className="array-item">
+                <button
+                  onClick={() => removeArrayItem("projects", index)}
+                  className="remove-btn"
+                >
+                  <Trash2 size={16} />
+                </button>
+                <div className="form-group">
+                  <label>Project Name</label>
+                  <input
+                    name="name"
+                    value={project.name}
+                    onChange={(e) => handleArrayChange("projects", index, e)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Description</label>
+                  <textarea
+                    name="description"
+                    value={project.description}
+                    onChange={(e) => handleArrayChange("projects", index, e)}
+                    rows={3}
+                  ></textarea>
+                </div>
+              </div>
+            ))}
+            <button
+              onClick={() =>
+                addArrayItem("projects", { name: "New Project", description: "" })
+              }
+              className="add-btn"
+            >
+              <Plus size={16} /> Add Project
+            </button>
+          </div>
 
-            {/* Skills Section - NEW */}
-            <div className="form-section">
-                <h3>Skills</h3>
-                {resumeData.skills.map((skill, index) => (
-                    <div key={index} style={{display: 'flex', gap: '0.5rem', marginBottom: '0.5rem'}}>
-                        <input value={skill} onChange={(e) => handleSkillChange(index, e.target.value)} style={{flex: 1}} />
-                        <button onClick={() => removeArrayItem('skills', index)} className="remove-btn" style={{position: 'static', width: '38px', height: '38px'}}><Trash2 size={14}/></button>
-                    </div>
-                ))}
-                <button onClick={() => addArrayItem('skills', 'New Skill')} className="add-btn" style={{marginTop: '0.5rem'}}><Plus size={16} /> Add Skill</button>
-            </div>
+          {/* Education Section */}
+          <div className="form-section">
+            <h3>Education</h3>
+            {resumeData.education.map((edu, index) => (
+              <div key={index} className="array-item">
+                <button
+                  onClick={() => removeArrayItem("education", index)}
+                  className="remove-btn"
+                >
+                  <Trash2 size={16} />
+                </button>
+                <div className="form-group">
+                  <label>Degree / Certificate</label>
+                  <input
+                    name="degree"
+                    value={edu.degree}
+                    onChange={(e) => handleArrayChange("education", index, e)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Institution</label>
+                  <input
+                    name="institution"
+                    value={edu.institution}
+                    onChange={(e) => handleArrayChange("education", index, e)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Period</label>
+                  <input
+                    name="period"
+                    value={edu.period}
+                    onChange={(e) => handleArrayChange("education", index, e)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Notes (Optional)</label>
+                  <input
+                    name="notes"
+                    value={edu.notes}
+                    onChange={(e) => handleArrayChange("education", index, e)}
+                  />
+                </div>
+              </div>
+            ))}
+            <button
+              onClick={() =>
+                addArrayItem("education", {
+                  degree: "Degree",
+                  institution: "University",
+                  period: "",
+                  notes: "",
+                })
+              }
+              className="add-btn"
+            >
+              <Plus size={16} /> Add Education
+            </button>
+          </div>
 
+          {/* Skills Section - NEW */}
+          <div className="form-section">
+            <h3>Skills</h3>
+            {resumeData.skills.map((skill, index) => (
+              <div
+                key={index}
+                style={{ display: "flex", gap: "0.5rem", marginBottom: "0.5rem" }}
+              >
+                <input
+                  value={skill}
+                  onChange={(e) => handleSkillChange(index, e.target.value)}
+                  style={{ flex: 1 }}
+                />
+                <button
+                  onClick={() => removeArrayItem("skills", index)}
+                  className="remove-btn"
+                  style={{ position: "static", width: "38px", height: "38px" }}
+                >
+                  <Trash2 size={14} />
+                </button>
+              </div>
+            ))}
+            <button
+              onClick={() => addArrayItem("skills", "New Skill")}
+              className="add-btn"
+              style={{ marginTop: "0.5rem" }}
+            >
+              <Plus size={16} /> Add Skill
+            </button>
+          </div>
         </aside>
 
         {/* RIGHT SIDE: LIVE PREVIEW */}
-        <main className="preview-pane" style={{ flex: 1, height: "100vh", overflowY: "auto", padding: "2rem", backgroundColor: '#f8fafc' }}>
-          <div className="preview-wrapper" style={{ margin: '0 auto', transform: 'scale(0.8)', transformOrigin: 'top center' }}>
+        <main
+          className="preview-pane"
+          style={{
+            flex: 1,
+            height: "100vh",
+            overflowY: "auto",
+            padding: "2rem",
+            backgroundColor: "#f8fafc",
+          }}
+        >
+          <div
+            className="preview-wrapper"
+            style={{
+              margin: "0 auto",
+              transform: "scale(0.8)",
+              transformOrigin: "top center",
+            }}
+          >
             {renderTemplate()}
           </div>
         </main>
